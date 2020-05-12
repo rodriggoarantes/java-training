@@ -11,4 +11,4 @@
 * Controle deve imprimir (sysout) a mensagem completa.
 
 #### A mensagem final deve ficar semelhante a apresentada abaixo:
-![Mensagem Final](/mvc.png)
+![Mensagem Final](mvc.png)
