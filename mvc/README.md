@@ -9,3 +9,6 @@
 * Repositorio devera fornecer o nome do aluno no metodo findAluno.
 * Serviço deve montar e retornar a mensagem "Olá '_Nome do Aluno_"
 * Controle deve imprimir (sysout) a mensagem completa.
+
+#### A mensagem final deve ficar semelhante a apresentada abaixo:
+![Mensagem Final](/mvc.png)
