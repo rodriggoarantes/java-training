@@ -1,8 +1,8 @@
 package com.training.mvc.application.impl;
 
 import com.training.mvc.application.AlunoService;
-import com.training.mvc.application.Logger;
 import com.training.mvc.domain.AlunoRepository;
+import com.training.mvc.infra.Logger;
 
 public class AlunoServiceImpl implements AlunoService, Logger {
 
