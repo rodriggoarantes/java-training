@@ -1,6 +1,8 @@
 package com.training.infra;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -29,6 +31,7 @@ public class HttpClient<T> {
                 .build();
 
         final Call call = client().newCall(request);
+
         try (final Response response = call.execute()) {
             if (response.isSuccessful() && Objects.nonNull(response.body())) {
                 final String json = response.body().string();
@@ -38,6 +41,7 @@ public class HttpClient<T> {
         } catch (Exception io) {
             return Optional.empty();
         }
+
     }
 
     private OkHttpClient client() {
