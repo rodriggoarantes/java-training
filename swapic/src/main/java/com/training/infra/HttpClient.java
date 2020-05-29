@@ -1,23 +1,28 @@
-package com.training.application.impl;
+package com.training.infra;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
-public class HttpClient {
+public class HttpClient<T> {
 
-    private static final String URLBASE = "http://localhost:3000";
+    private static final String URLBASE = "https://swapi.dev/api";
 
+    private final Class<T> genericClass;
+    private final Gson parser;
     private OkHttpClient client;
 
-    public Optional<JsonElement> get(String path) {
+    public HttpClient(Class<T> entity) {
+        this.parser = new Gson();
+        this.genericClass = entity;
+    }
+
+    public Optional<T> get(String path) {
         final Request request = new Request.Builder()
                 .addHeader("Content-Type", "application/json")
                 .url(url(path))
@@ -27,8 +32,7 @@ public class HttpClient {
         try (final Response response = call.execute()) {
             if (response.isSuccessful() && Objects.nonNull(response.body())) {
                 final String json = response.body().string();
-                final JsonElement element = JsonParser.parseString(json);
-                return Optional.of(element);
+                return Optional.of(parser.fromJson(json, genericClass));
             }
             return Optional.empty();
         } catch (Exception io) {
@@ -38,7 +42,7 @@ public class HttpClient {
 
     private OkHttpClient client() {
         if (client == null) {
-            this.client =  new OkHttpClient();
+            this.client = new OkHttpClient();
         }
         return this.client;
     }

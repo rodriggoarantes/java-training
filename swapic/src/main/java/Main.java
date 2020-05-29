@@ -1,16 +1,12 @@
-import com.training.application.PostService;
-import com.training.application.impl.PostServiceImpl;
-import com.training.domain.Post;
-
-import java.util.List;
+import com.training.application.ApiService;
+import com.training.application.impl.SwapiServiceImpl;
+import com.training.domain.Planet;
 
 public class Main {
-
     public static void main(String[] args) {
-        PostService service = new PostServiceImpl();
+        final ApiService service = new SwapiServiceImpl();
 
-        List<Post> list = service.listPosts();
-
-        list.forEach(i -> {System.out.println(i.getAuthor());});
+        final Planet planet = service.planet();
+        System.out.println(String.format("Planeta: %s", planet.getName()));
     }
 }
