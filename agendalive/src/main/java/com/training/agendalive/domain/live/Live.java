@@ -68,4 +68,11 @@ public class Live {
     public void setSaved(LocalDateTime saved) {
         this.saved = saved;
     }
+
+    @Override
+    public String toString() {
+        return "Live{" +
+                "id=" + id +
+                '}';
+    }
 }

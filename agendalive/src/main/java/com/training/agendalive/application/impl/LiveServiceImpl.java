@@ -3,6 +3,7 @@ package com.training.agendalive.application.impl;
 import com.training.agendalive.application.LiveService;
 import com.training.agendalive.domain.live.Live;
 import com.training.agendalive.domain.live.LiveRepository;
+import com.training.agendalive.infra.Logger;
 import com.training.agendalive.infra.exception.NotFoundException;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LiveServiceImpl implements LiveService {
+public class LiveServiceImpl implements Logger, LiveService {
 
     private final LiveRepository repository;
 
@@ -23,6 +24,7 @@ public class LiveServiceImpl implements LiveService {
 
     @Override
     public Live obter(@NonNull Long id) {
+        log("obter: " + id);
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         String.format("Usuário não encontrado com ID %s", id)));
@@ -30,6 +32,7 @@ public class LiveServiceImpl implements LiveService {
 
     @Override
     public Live inserir(@NonNull Live live) {
+        log("obter: " + live);
         validate(live);
         return repository.save(live);
     }
