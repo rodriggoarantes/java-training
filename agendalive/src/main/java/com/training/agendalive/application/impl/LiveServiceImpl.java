@@ -1,6 +1,7 @@
 package com.training.agendalive.application.impl;
 
 import com.training.agendalive.application.LiveService;
+import com.training.agendalive.domain.autor.AutorRepository;
 import com.training.agendalive.domain.live.Live;
 import com.training.agendalive.domain.live.LiveRepository;
 import com.training.agendalive.infra.Logger;
@@ -11,15 +12,19 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LiveServiceImpl implements Logger, LiveService {
 
     private final LiveRepository repository;
+    private final AutorRepository autorRepository;
 
     @Autowired
-    public LiveServiceImpl(LiveRepository repository) {
+    public LiveServiceImpl(LiveRepository repository,
+                           AutorRepository autorRepository) {
         this.repository = repository;
+        this.autorRepository = autorRepository;
     }
 
     @Override
@@ -34,6 +39,10 @@ public class LiveServiceImpl implements Logger, LiveService {
     public Live inserir(@NonNull Live live) {
         log("obter: " + live);
         validate(live);
+
+        Optional.ofNullable(live.getAutor().getId()).ifPresent(id -> {
+            autorRepository.findById(id).ifPresent(live::setAutor);
+        });
         return repository.save(live);
     }
 

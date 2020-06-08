@@ -1,15 +1,11 @@
 package com.training.agendalive.domain.live;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.training.agendalive.domain.autor.Autor;
 import com.training.agendalive.domain.video.Video;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,8 +15,10 @@ public class Live {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String nome;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime data;
 
     @Embedded
@@ -28,6 +26,10 @@ public class Live {
 
     @UpdateTimestamp
     private LocalDateTime saved;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "autor_id", nullable = false, referencedColumnName = "id")
+    private Autor autor;
 
     public Long getId() {
         return id;
@@ -69,10 +71,19 @@ public class Live {
         this.saved = saved;
     }
 
+    public Autor getAutor() {
+        if (autor == null) {
+            autor = new Autor();
+        }
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
     @Override
     public String toString() {
-        return "Live{" +
-                "id=" + id +
-                '}';
+        return "Live{" + "id=" + id + '}';
     }
 }

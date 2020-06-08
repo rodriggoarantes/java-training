@@ -30,6 +30,7 @@ class LiveServiceImplTest {
         teste.getVideo().setTitulo(teste.getNome());
         teste.getVideo().setCanal("@teste");
         teste.getVideo().setLink("http://localhost");
+        teste.getAutor().setNome("Autor Teste");
     }
 
     @Test
@@ -39,6 +40,10 @@ class LiveServiceImplTest {
         assertThat(inserted, notNullValue());
         assertThat(inserted.getId(), notNullValue());
         assertThat(inserted.getId().compareTo(0L), equalTo(1));
+
+        assertThat(inserted.getAutor(), notNullValue());
+        assertThat(inserted.getAutor().getId(), notNullValue());
+        assertThat(inserted.getAutor().getNome(), equalTo(teste.getAutor().getNome()));
     }
 
 }
