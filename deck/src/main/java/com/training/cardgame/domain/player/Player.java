@@ -6,6 +6,7 @@ public class Player {
     @Id
     private Long id;
     private String nome;
+    private String login;
 
     public Long getId() {
         return id;
@@ -21,5 +22,13 @@ public class Player {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

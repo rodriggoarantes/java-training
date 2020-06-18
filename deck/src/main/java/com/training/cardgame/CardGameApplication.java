@@ -21,7 +21,7 @@ public class CardGameApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		log.info("Creating tables");
 		jdbcTemplate.execute("DROP TABLE game IF EXISTS");
 		jdbcTemplate.execute("CREATE TABLE game(" +
@@ -29,6 +29,10 @@ public class CardGameApplication implements CommandLineRunner {
 				"tipo VARCHAR(255), data DATE, saved DATE )");
 
 		jdbcTemplate.execute("DROP TABLE player IF EXISTS");
-		jdbcTemplate.execute("CREATE TABLE player(id INT PRIMARY KEY AUTO_INCREMENT, nome VARCHAR(255))");
+		jdbcTemplate.execute("CREATE TABLE player(id BIGINT PRIMARY KEY AUTO_INCREMENT, nome VARCHAR(255)" +
+				", login VARCHAR(255))");
+
+		jdbcTemplate.execute("DROP TABLE game_players IF EXISTS");
+		jdbcTemplate.execute("CREATE TABLE game_players(game BIGINT, player BIGINT)");
 	}
 }

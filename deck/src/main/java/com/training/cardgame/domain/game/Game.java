@@ -2,6 +2,7 @@ package com.training.cardgame.domain.game;
 
 import com.training.cardgame.domain.player.Player;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +14,8 @@ public class Game {
     private String nome;
     private LocalDateTime data;
     private LocalDateTime saved;
+
+    @Transient
     private List<Player> players;
 
     public Long getId() {
