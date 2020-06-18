@@ -1,4 +1,4 @@
-package com.training.cardgame.infra.exception;
+package com.training.agendalive.infra.exception;
 
 public class BusinessException extends RuntimeException {
     private final ServiceError error;

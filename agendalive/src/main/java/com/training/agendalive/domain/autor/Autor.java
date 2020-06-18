@@ -1,4 +1,4 @@
-package com.training.cardgame.domain.player;
+package com.training.agendalive.domain.autor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

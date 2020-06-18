@@ -1,6 +1,6 @@
-package com.training.cardgame.application;
+package com.training.agendalive.application;
 
-import com.training.cardgame.domain.game.Live;
+import com.training.agendalive.domain.live.Live;
 import org.springframework.lang.NonNull;
 
 import java.util.List;

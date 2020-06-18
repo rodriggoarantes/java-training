@@ -1,14 +1,10 @@
 package com.training.cardgame.domain.player;
 
 
-import com.training.cardgame.domain.game.Game;
-import com.training.cardgame.domain.game.GameRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;

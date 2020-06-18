@@ -1,11 +1,12 @@
-package com.training.cardgame.application.impl;
+package com.training.agendalive.application.impl;
 
-import com.training.cardgame.application.LiveService;
-import com.training.cardgame.domain.player.AutorRepository;
-import com.training.cardgame.domain.game.Live;
-import com.training.cardgame.domain.game.LiveRepository;
-import com.training.cardgame.infra.Logger;
-import com.training.cardgame.infra.exception.NotFoundException;
+import com.training.agendalive.application.LiveService;
+import com.training.agendalive.domain.live.Live;
+import com.training.agendalive.domain.live.LiveRepository;
+import com.training.agendalive.domain.autor.AutorRepository;
+import com.training.agendalive.infra.Logger;
+import com.training.agendalive.infra.exception.NotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -32,7 +33,7 @@ public class LiveServiceImpl implements Logger, LiveService {
         log("obter: " + id);
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("Usuário não encontrado com ID %s", id)));
+                        String.format("Live não encontrada com ID %s", id)));
     }
 
     @Override
@@ -41,7 +42,8 @@ public class LiveServiceImpl implements Logger, LiveService {
         validate(live);
 
         Optional.ofNullable(live.getAutor().getId()).ifPresent(id -> {
-            autorRepository.findById(id).ifPresent(live::setAutor);
+            live.setAutor(autorRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Autor não encontrado")));
         });
         return repository.save(live);
     }
@@ -70,7 +72,7 @@ public class LiveServiceImpl implements Logger, LiveService {
 
     private static void validate(Live obj) {
         Validate.notNull(obj, "Dados da live não informado");
-        Validate.notNull(obj.getNome(), "Nome da Live não informado");
+        Validate.isTrue(StringUtils.isNotBlank(obj.getNome()), "Nome da Live não informado");
         Validate.notNull(obj.getVideo(), "Dados do video da Live não informado");
         Validate.notNull(obj.getVideo().getLink(), "Link do video da Live não informado");
     }

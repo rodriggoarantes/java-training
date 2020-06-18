@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value={"lives", "schedules"})
+@RequestMapping(value={"games", "rooms"})
 public class GameResource {
 
     @Autowired
@@ -33,8 +33,4 @@ public class GameResource {
         return service.inserir(live);
     }
 
-    @PutMapping
-    public Game alterar(@RequestBody Game param) {
-        return service.alterar(param);
-    }
 }

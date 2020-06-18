@@ -1,4 +1,4 @@
-package com.training.cardgame.infra.exception;
+package com.training.agendalive.infra.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

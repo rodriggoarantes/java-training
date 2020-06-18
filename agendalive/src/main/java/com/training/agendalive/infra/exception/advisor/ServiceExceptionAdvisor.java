@@ -1,8 +1,8 @@
-package com.training.cardgame.infra.exception.advisor;
+package com.training.agendalive.infra.exception.advisor;
 
-import com.training.cardgame.infra.exception.BusinessException;
-import com.training.cardgame.infra.exception.NotFoundException;
-import com.training.cardgame.infra.exception.ServiceError;
+import com.training.agendalive.infra.exception.BusinessException;
+import com.training.agendalive.infra.exception.NotFoundException;
+import com.training.agendalive.infra.exception.ServiceError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

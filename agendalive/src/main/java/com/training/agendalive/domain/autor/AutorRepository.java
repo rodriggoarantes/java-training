@@ -1,4 +1,4 @@
-package com.training.cardgame.domain.player;
+package com.training.agendalive.domain.autor;
 
 import org.springframework.data.repository.CrudRepository;
 

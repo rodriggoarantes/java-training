@@ -1,8 +1,8 @@
-package com.training.cardgame.domain.game;
+package com.training.agendalive.domain.live;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.training.cardgame.domain.player.Autor;
-import com.training.cardgame.domain.video.Video;
+import com.training.agendalive.domain.autor.Autor;
+import com.training.agendalive.domain.video.Video;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;

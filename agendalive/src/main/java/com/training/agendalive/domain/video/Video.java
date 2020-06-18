@@ -1,4 +1,4 @@
-package com.training.cardgame.domain.video;
+package com.training.agendalive.domain.video;
 
 public class Video {
 

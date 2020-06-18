@@ -1,4 +1,4 @@
-package com.training.cardgame;
+package com.training.agendalive;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

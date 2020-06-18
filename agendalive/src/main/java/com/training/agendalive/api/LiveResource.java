@@ -1,7 +1,7 @@
-package com.training.cardgame.api;
+package com.training.agendalive.api;
 
-import com.training.cardgame.application.LiveService;
-import com.training.cardgame.domain.game.Live;
+import com.training.agendalive.application.LiveService;
+import com.training.agendalive.domain.live.Live;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

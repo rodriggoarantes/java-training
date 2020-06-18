@@ -1,6 +1,7 @@
 package com.training.cardgame.domain.game;
 
 import com.training.cardgame.application.GameService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,12 @@ class GameRepositoryTest {
     @Test
     public void test_save_novo_sucesso() {
         final Game inserted = repository.save(teste);
+
         assertThat(inserted, notNullValue());
         assertThat(inserted.getId(), notNullValue());
         assertThat(inserted.getId(), equalTo(teste.getId()));
         assertThat(inserted.getData(), notNullValue());
     }
+
+    // inserir_sucesso
 }
