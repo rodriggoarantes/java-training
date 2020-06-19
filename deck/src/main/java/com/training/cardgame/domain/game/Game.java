@@ -16,7 +16,7 @@ public class Game {
     private LocalDateTime saved;
 
     @Transient
-    private List<Player> players;
+    private List<Long> players;
 
     public Long getId() {
         return id;
@@ -50,11 +50,11 @@ public class Game {
         this.saved = saved;
     }
 
-    public List<Player> getPlayers() {
+    public List<Long> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<Long> players) {
         this.players = players;
     }
 

@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value={"games", "rooms"})
@@ -29,8 +33,14 @@ public class GameResource {
     }
 
     @PostMapping
-    public Game inserir(@RequestBody Game live) {
-        return service.inserir(live);
+    public Game inserir(@RequestBody Game game) {
+        return service.inserir(game);
+    }
+
+    @PostMapping("/players/{id}")
+    public Game iniciarNovo(@RequestBody Game game, @PathVariable Long id) {
+        game.setPlayers(Collections.singletonList(id));
+        return service.inserir(game);
     }
 
 }
