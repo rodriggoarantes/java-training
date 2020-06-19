@@ -23,3 +23,4 @@ public class GamePlayerRepository {
         template.update(sql, parametros);
     }
 }
+
