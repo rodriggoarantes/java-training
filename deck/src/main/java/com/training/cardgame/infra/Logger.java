@@ -1,4 +1,4 @@
-package com.training.agendalive.infra;
+package com.training.cardgame.infra;
 
 import org.slf4j.LoggerFactory;
 
