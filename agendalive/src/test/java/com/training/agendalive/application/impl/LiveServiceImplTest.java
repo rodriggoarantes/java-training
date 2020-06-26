@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -46,4 +47,19 @@ class LiveServiceImplTest {
         assertThat(inserted.getAutor().getNome(), equalTo(teste.getAutor().getNome()));
     }
 
+    @Test
+    public void test_inserir_null() {
+        assertThatThrownBy(() -> service.inserir(null))
+                .isInstanceOf(NullPointerException.class)
+                    .hasMessage("Dados da live não informado");
+    }
+
+    @Test
+    public void test_inserir_nomeVazio() {
+        final Live live = new Live();
+        live.setNome("");
+        assertThatThrownBy(() -> service.inserir(live))
+                .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("Nome da Live não informado");
+    }
 }
