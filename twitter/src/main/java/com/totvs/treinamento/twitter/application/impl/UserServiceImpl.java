@@ -38,10 +38,8 @@ class UserServiceImpl implements Logger, UserService {
         log("obter: " + param);
         validate(param);
 
-        Optional.ofNullable(repository.findByLogin(param.getLogin()))
-            .ifPresent((user) -> {
-                throw new BusinessException("FOUND", "Usuario já existente", HttpStatus.BAD_REQUEST.value());
-            });
+        if (repository.existsByLogin(param.getLogin()))
+            throw new BusinessException("FOUND", "Usuario já existente com o login informado", HttpStatus.BAD_REQUEST.value());
 
         return repository.save(param);
     }
@@ -59,5 +57,6 @@ class UserServiceImpl implements Logger, UserService {
     private static void validate(User obj) {
         Validate.notNull(obj, "Dados do usuario não informado");
         Validate.isTrue(StringUtils.isNotBlank(obj.getName()), "Nome do usuario não informado");
+        Validate.isTrue(StringUtils.isNotBlank(obj.getLogin()), "Login do usuario não informado");
     }
 }
