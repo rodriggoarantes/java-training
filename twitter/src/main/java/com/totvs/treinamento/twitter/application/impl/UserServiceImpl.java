@@ -1,8 +1,8 @@
 package com.totvs.treinamento.twitter.application.impl;
 
 import com.totvs.treinamento.twitter.application.UserService;
-import com.totvs.treinamento.twitter.domain.usuario.User;
-import com.totvs.treinamento.twitter.domain.usuario.UserRepository;
+import com.totvs.treinamento.twitter.domain.user.User;
+import com.totvs.treinamento.twitter.domain.user.UserRepository;
 import com.totvs.treinamento.twitter.infra.Logger;
 import com.totvs.treinamento.twitter.infra.exception.BusinessException;
 import com.totvs.treinamento.twitter.infra.exception.NotFoundException;
@@ -26,7 +26,7 @@ class UserServiceImpl implements Logger, UserService {
     }
 
     @Override
-    public User find(Long id) {
+    public User find(@NonNull Long id) {
         log("find: " + id);
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(

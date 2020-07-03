@@ -1,4 +1,4 @@
-package com.totvs.treinamento.twitter.domain.usuario;
+package com.totvs.treinamento.twitter.domain.user;
 
 
 import javax.persistence.Column;

@@ -1,9 +1,7 @@
 package com.totvs.treinamento.twitter.application;
 
-import com.totvs.treinamento.twitter.domain.usuario.User;
+import com.totvs.treinamento.twitter.domain.user.User;
 import org.springframework.lang.NonNull;
-
-import java.util.List;
 
 public interface UserService {
     User find(@NonNull final Long id);

@@ -1,6 +1,7 @@
 package com.totvs.treinamento.twitter.domain.twitter;
 
-import com.totvs.treinamento.twitter.domain.usuario.User;
+import com.totvs.treinamento.twitter.domain.user.User;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ public class Twitter {
     @Column(nullable = false)
     private String message;
 
+    @CreationTimestamp
     private LocalDateTime date;
 
     private String country;

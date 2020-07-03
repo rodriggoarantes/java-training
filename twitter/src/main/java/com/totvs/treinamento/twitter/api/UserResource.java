@@ -1,7 +1,7 @@
 package com.totvs.treinamento.twitter.api;
 
 import com.totvs.treinamento.twitter.application.UserService;
-import com.totvs.treinamento.twitter.domain.usuario.User;
+import com.totvs.treinamento.twitter.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
