@@ -30,7 +30,7 @@ public class CommentResource {
         return service.list();
     }
 
-    @GetMapping("/twitter/{id}")
+    @GetMapping("/twitters/{id}")
     public Iterable<Comment> listByTwitter(@PathVariable Long id) {
         return service.findByTwitter(id);
     }

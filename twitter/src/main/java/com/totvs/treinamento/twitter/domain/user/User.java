@@ -19,6 +19,12 @@ public class User {
     private String login;
     private String avatar;
 
+    public User() {}
+
+    public User(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

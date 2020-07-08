@@ -28,6 +28,14 @@ public class Like {
     @UpdateTimestamp
     private LocalDateTime time;
 
+    public Like() {
+    }
+
+    public Like(Long twitterId, Long userId) {
+        this.twitter = new Twitter(twitterId);
+        this.user = new User(userId);
+    }
+
     public Long getId() {
         return id;
     }
