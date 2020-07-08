@@ -32,17 +32,17 @@ public class CommentResource {
 
     @GetMapping("/twitter/{id}")
     public Iterable<Comment> listByTwitter(@PathVariable Long id) {
-        return service.listByTwitter(id);
+        return service.findByTwitter(id);
     }
 
     @PostMapping
-    public Comment insert(@RequestBody Comment comment) {
-        return service.insert(comment);
+    public Comment save(@RequestBody Comment comment) {
+        return service.save(comment);
     }
 
     @DeleteMapping("/{id}")
     public Map<String, String> deleteByOwner(@PathVariable Long id, @RequestHeader("user_id") Long userId) {
         service.deleteByOwner(id, userId);
-        return Collections.singletonMap("msg", "Comentario deletado com sucesso");
+        return Collections.singletonMap("msg", "Comentário deletado com sucesso");
     }
 }
