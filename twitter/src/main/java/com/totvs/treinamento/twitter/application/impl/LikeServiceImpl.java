@@ -44,14 +44,13 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void unlike(@NonNull Long twitterId, @NonNull Long userId) {
-        final Twitter twitter = Optional.ofNullable(twitterService.get(twitterId))
-                .orElseThrow(() -> new BusinessException("Twitter não encontrado"));
+        final Like like = Optional.ofNullable(repository.findByTwitterIdAndUserId(twitterId, userId))
+                .orElseThrow(() -> new BusinessException("Curtida não encontrada"));
         final User owner = Optional.ofNullable(userService.find(userId))
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));;
 
-        if (owner.getId().equals(twitter.getUser().getId())) {
-            Optional.ofNullable(repository.findByTwitterIdAndUserId(twitterId, userId))
-                    .ifPresent(repository::delete);
+        if (owner.getId().equals(like.getUser().getId())) {
+            repository.delete(like);
         } else {
             throw new BusinessException("Somente o proprietário pode alterar um like");
         }
