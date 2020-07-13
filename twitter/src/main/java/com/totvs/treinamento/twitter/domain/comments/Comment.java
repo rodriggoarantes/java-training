@@ -4,6 +4,7 @@ import com.totvs.treinamento.twitter.domain.twitter.Twitter;
 import com.totvs.treinamento.twitter.domain.user.User;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
