@@ -45,7 +45,7 @@ public class TwitterServiceImpl implements TwitterService {
 
     @Override
     public Iterable<Twitter> list() {
-        return repository.findAll();
+        return repository.list();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.totvs.treinamento.twitter.domain.twitter;
 
 import com.totvs.treinamento.twitter.domain.user.User;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,8 +32,13 @@ public class Twitter {
     @OneToOne
     private User user;
 
-    // comments
-    // likes
+    @Transient
+    @Column(name = "comments", insertable = false, updatable = false, nullable = false)
+    private int comments;
+
+    @Transient
+    @Column(name = "likes", insertable = false, updatable = false, nullable = false)
+    private int likes;
 
     public Twitter() {}
 
@@ -77,5 +84,21 @@ public class Twitter {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
