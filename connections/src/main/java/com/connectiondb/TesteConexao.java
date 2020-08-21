@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class TesteConexao {
@@ -85,7 +84,6 @@ public class TesteConexao {
 
     private static void closeAll() {
         log.info("FECHANDO CONEXOES: {}", CONEXOES.size());
-        final AtomicInteger count = new AtomicInteger(0);
         CONEXOES.forEach(conn -> {
             try {
                     conn.close();
@@ -97,6 +95,6 @@ public class TesteConexao {
 
     private static long random() {
         final Random rand = new Random();
-        return rand.nextInt(1000);
+        return rand.nextInt(5000);
     }
 }
