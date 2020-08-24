@@ -30,6 +30,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		log.info("-------- Oracle JDBC Connection TESTE ------");
+		Thread.sleep(60000);
 		teste.testeParalelo();
 		log.info("-------- Oracle JDBC Connection FINALIZADO ------");
 	}
