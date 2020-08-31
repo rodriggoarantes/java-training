@@ -20,4 +20,8 @@ public class Categoria {
     @GeneratedValue
     private Long id;
     private String nome;
+
+    public Categoria(String nome) {
+        this.nome = nome;
+    }
 }

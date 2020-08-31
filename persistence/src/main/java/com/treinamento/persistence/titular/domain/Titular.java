@@ -23,4 +23,7 @@ public class Titular {
     private TitularId id;
     private String nome;
 
+    public Titular(String nome) {
+        this.nome = nome;
+    }
 }

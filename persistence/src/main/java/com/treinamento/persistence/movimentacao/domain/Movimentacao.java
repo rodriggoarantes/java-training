@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +19,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,11 +48,20 @@ public class Movimentacao {
     @ManyToOne
     private Conta conta;
     @ManyToMany
-    private List<Categoria> categorias;
+    private Set<Categoria> categorias = new HashSet<>();
 
     public Movimentacao(Conta conta, TipoMovimentacao tipo, String descricao) {
         this.conta = conta;
         this.tipo = tipo;
         this.descricao = descricao;
+    }
+
+    public void adicionarCategoria(Categoria categoria) {
+        this.categorias.add(categoria);
+    }
+    public void adicionarCategoria(Collection<Categoria> categorias) {
+        if (!CollectionUtils.isEmpty(categorias)) {
+            this.categorias.addAll(categorias);
+        }
     }
 }

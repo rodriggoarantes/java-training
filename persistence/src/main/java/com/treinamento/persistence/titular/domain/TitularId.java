@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -16,6 +19,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Embeddable
 public class TitularId implements Serializable {
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName="titular_seq", allocationSize=1)
     private Long titularId;
 }
 
