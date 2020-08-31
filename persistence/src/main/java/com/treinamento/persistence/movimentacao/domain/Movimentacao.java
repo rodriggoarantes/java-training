@@ -1,6 +1,7 @@
 package com.treinamento.persistence.movimentacao.domain;
 
 import com.treinamento.persistence.conta.domain.Conta;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,10 +14,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @ToString
 @Builder
@@ -32,13 +37,17 @@ public class Movimentacao {
     private TipoMovimentacao tipo;
     @CreationTimestamp
     private LocalDateTime data;
+    @Version
+    private Long version;
 
     @ManyToOne
     private Conta conta;
+    @ManyToMany
+    private List<Categoria> categorias;
 
-    public Movimentacao(Conta conta, String descricao, TipoMovimentacao tipo) {
+    public Movimentacao(Conta conta, TipoMovimentacao tipo, String descricao) {
         this.conta = conta;
-        this.descricao = descricao;
         this.tipo = tipo;
+        this.descricao = descricao;
     }
 }

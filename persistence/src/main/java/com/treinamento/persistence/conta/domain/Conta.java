@@ -12,6 +12,7 @@ import lombok.ToString;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Version;
 import java.math.BigDecimal;
 
 @NoArgsConstructor
@@ -31,9 +32,11 @@ public class Conta {
     private TitularId titular;
     private ContaStatus status;
     private BigDecimal saldo;
+    @Version
+    private Long version;
 
     public Conta(Integer agencia, Integer numero, TitularId titular) {
-        this(ContaId.from(-1), agencia, numero, titular, ContaStatus.ANALISE, BigDecimal.ZERO);
+        this(ContaId.from(-1), agencia, numero, titular, ContaStatus.ANALISE, BigDecimal.ZERO, null);
     }
 
     public void alterarStatus(ContaStatus newStatus) {

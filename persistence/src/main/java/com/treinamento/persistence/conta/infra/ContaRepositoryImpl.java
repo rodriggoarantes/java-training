@@ -45,6 +45,6 @@ public class ContaRepositoryImpl implements ContaRepository {
     @Override
     public Conta findBy(ContaId contaId) {
         return crudRepository.findById(contaId)
-                .orElseThrow(() -> new RuntimeException("Nenhuma registro encontrado"));
+                .orElseThrow(() -> new RuntimeException("Nenhuma registro de conta foi encontrado"));
     }
 }

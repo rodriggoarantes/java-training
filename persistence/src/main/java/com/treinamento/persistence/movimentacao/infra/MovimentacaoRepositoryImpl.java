@@ -1,10 +1,5 @@
 package com.treinamento.persistence.movimentacao.infra;
 
-import com.treinamento.persistence.conta.domain.Conta;
-import com.treinamento.persistence.conta.domain.ContaId;
-import com.treinamento.persistence.conta.domain.ContaRepository;
-import com.treinamento.persistence.conta.infra.ContaCrudRepository;
-import com.treinamento.persistence.conta.infra.ContaIdSequenceGenerator;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
