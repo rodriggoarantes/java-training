@@ -1,6 +1,7 @@
 package com.treinamento.persistence.conta.domain;
 
 import com.treinamento.framework.exception.BusinessException;
+import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.titular.domain.TitularId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +13,10 @@ import lombok.ToString;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.math.BigDecimal;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,8 +38,11 @@ public class Conta {
     @Version
     private Long version;
 
+    @OneToMany(mappedBy = "conta")
+    private List<Movimentacao> movimentacoes;
+
     public Conta(Integer agencia, Integer numero, TitularId titular) {
-        this(ContaId.from(-1), agencia, numero, titular, ContaStatus.ANALISE, BigDecimal.ZERO, null);
+        this(ContaId.from(-1), agencia, numero, titular, ContaStatus.ANALISE, BigDecimal.ZERO, null, null);
     }
 
     public void alterarStatus(ContaStatus newStatus) {

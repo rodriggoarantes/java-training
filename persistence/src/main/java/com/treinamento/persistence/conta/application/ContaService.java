@@ -32,6 +32,10 @@ public class ContaService {
         return repository.findAll();
     }
 
+    public List<Conta> listarComMovimentacoes() {
+        return repository.listarComMovimentacoes();
+    }
+
     public Conta find(Long id) {
         return repository.findBy(new ContaId(id));
     }
