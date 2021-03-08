@@ -3,6 +3,7 @@ package com.treinamento.persistence.conta.domain;
 import com.treinamento.framework.exception.BusinessException;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.titular.domain.TitularId;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,15 +11,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.math.BigDecimal;
 import java.util.List;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
 @ToString
@@ -38,7 +41,7 @@ public class Conta {
     @Version
     private Long version;
 
-    @OneToMany(mappedBy = "conta")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "conta", cascade = CascadeType.ALL)
     private List<Movimentacao> movimentacoes;
 
     public Conta(Integer agencia, Integer numero, TitularId titular) {
@@ -49,7 +52,7 @@ public class Conta {
         if (this.status != newStatus
                 && (ContaStatus.CANCELADA.equals(this.status) || ContaStatus.ANALISE.equals(newStatus))) {
             throw new BusinessException(
-                    String.format("Não é possivel alterar o status da conta de %s para %s", this.status, newStatus));
+                    String.format("Não é possível alterar o status da conta de %s para %s", this.status, newStatus));
         }
         this.status = newStatus;
     }

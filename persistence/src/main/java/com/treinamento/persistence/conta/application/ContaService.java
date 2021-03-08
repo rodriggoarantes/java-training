@@ -33,7 +33,7 @@ public class ContaService {
     }
 
     public List<Conta> listarComMovimentacoes() {
-        return repository.listarComMovimentacoes();
+        return repository.findWithMovimentacoes();
     }
 
     public Conta find(Long id) {

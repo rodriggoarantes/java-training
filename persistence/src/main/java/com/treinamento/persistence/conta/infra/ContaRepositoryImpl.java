@@ -3,10 +3,17 @@ package com.treinamento.persistence.conta.infra;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.domain.ContaRepository;
+import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
+import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -33,11 +40,11 @@ public class ContaRepositoryImpl implements ContaRepository {
     public Conta save(Conta conta) {
         if (conta.getId() == null || conta.getId().getContaId() == -1) {
             conta = Conta.builder()
-                    .id(sequenceGenerator.nextId())
-                    .agencia(conta.getAgencia()).numero(conta.getNumero())
-                    .saldo(conta.getSaldo()).status(conta.getStatus())
-                    .titular(conta.getTitular())
-                    .build();
+                         .id(sequenceGenerator.nextId())
+                         .agencia(conta.getAgencia()).numero(conta.getNumero())
+                         .saldo(conta.getSaldo()).status(conta.getStatus())
+                         .titular(conta.getTitular())
+                         .build();
         }
         return crudRepository.save(conta);
     }
@@ -45,11 +52,23 @@ public class ContaRepositoryImpl implements ContaRepository {
     @Override
     public Conta findBy(ContaId contaId) {
         return crudRepository.findById(contaId)
-                .orElseThrow(() -> new RuntimeException("Nenhuma registro de conta foi encontrado"));
+                             .orElseThrow(() -> new RuntimeException("Nenhuma registro de conta foi encontrado"));
     }
 
     @Override
-    public List<Conta> listarComMovimentacoes() {
+    public List<Conta> findWithMovimentacoes() {
         return crudRepository.listarComMovimentacoes();
     }
+
+    public List<Conta> findWithTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+        return crudRepository.findAll(withTipoMovimentacao(tipoMovimentacao));
+    }
+
+    private static Specification<Conta> withTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+        return (root, cq, cb) -> {
+            final var joined = root.join("movimentacoes", JoinType.INNER);
+            return cb.equal(joined.get("tipo"), tipoMovimentacao);
+        };
+    }
+
 }

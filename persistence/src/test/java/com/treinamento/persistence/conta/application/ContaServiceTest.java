@@ -1,6 +1,7 @@
 package com.treinamento.persistence.conta.application;
 
 import com.treinamento.persistence.conta.domain.Conta;
+import com.treinamento.persistence.conta.domain.ContaRepository;
 import com.treinamento.persistence.conta.domain.ContaStatus;
 import com.treinamento.persistence.conta.infra.ContaCrudRepository;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
@@ -11,25 +12,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class ContaServiceTest {
 
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
-    private ContaCrudRepository contaCrudRepository;
+    private ContaRepository contaRepository;
     @Autowired
     private ContaService service;
-
-    @BeforeEach
-    void setup() {
-        contaCrudRepository.deleteAll();
-    }
 
     @Test
     void alterarStatus() {

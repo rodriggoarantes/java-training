@@ -48,7 +48,7 @@ public class Movimentacao {
     @ManyToOne
     private Conta conta;
     @ManyToMany
-    private Set<Categoria> categorias = new HashSet<>();
+    private final Set<Categoria> categorias = new HashSet<>();
 
     public Movimentacao(Conta conta, TipoMovimentacao tipo, String descricao) {
         this.conta = conta;
@@ -59,6 +59,7 @@ public class Movimentacao {
     public void adicionarCategoria(Categoria categoria) {
         this.categorias.add(categoria);
     }
+
     public void adicionarCategoria(Collection<Categoria> categorias) {
         if (!CollectionUtils.isEmpty(categorias)) {
             this.categorias.addAll(categorias);

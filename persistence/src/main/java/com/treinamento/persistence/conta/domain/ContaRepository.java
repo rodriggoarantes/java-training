@@ -7,5 +7,5 @@ public interface ContaRepository {
     Conta save(Conta issue);
     Conta findBy(ContaId id);
 
-    List<Conta> listarComMovimentacoes();
+    List<Conta> findWithMovimentacoes();
 }
