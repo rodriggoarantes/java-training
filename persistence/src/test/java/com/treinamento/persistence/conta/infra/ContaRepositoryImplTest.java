@@ -4,6 +4,7 @@ import com.treinamento.persistence.config.ConfigIT;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaRepository;
 import com.treinamento.persistence.conta.domain.ContaStatus;
+import com.treinamento.persistence.movimentacao.domain.Categoria;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoRepository;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
@@ -96,7 +97,6 @@ class ContaRepositoryImplTest extends ConfigIT {
         assertEquals(ContaStatus.INATIVA, encontrada.getStatus());
     }
 
-
     @Test
     void findWithTipoMovimentacao() {
 
@@ -158,6 +158,45 @@ class ContaRepositoryImplTest extends ConfigIT {
         final Movimentacao movListado = lista.get(0).getMovimentacoes().get(0);
         assertEquals(movimentacao.getDescricao(), movListado.getDescricao());
         assertEquals(movimentacao.getTipo(), movListado.getTipo());
+    }
+
+    @Test
+    void findWithCategoria() {
+
+        final var conta0 = repository.save(Conta.builder()
+                                                .agencia(123)
+                                                .numero(123)
+                                                .saldo(BigDecimal.valueOf(100))
+                                                .titular(new TitularId(1L))
+                                                .build());
+
+        final var movimentacao1 = Movimentacao.builder().descricao("CONTA0").tipo(TipoMovimentacao.DEBITO).conta(conta0).build();
+        movimentacao1.adicionarCategoria(new Categoria("mov1"));
+        movimentacaoCrudRepository.save(movimentacao1);
+
+        final var conta = repository.save(Conta.builder()
+                                               .agencia(456)
+                                               .numero(456)
+                                               .saldo(BigDecimal.valueOf(200))
+                                               .titular(new TitularId(2L))
+                                               .build());
+
+        final var movimentacao2 = Movimentacao.builder().descricao("CONTA1").tipo(TipoMovimentacao.DEBITO).conta(conta).build();
+        movimentacao2.adicionarCategoria(new Categoria("mov1"));
+        movimentacao2.adicionarCategoria(new Categoria("mov2"));
+        movimentacaoCrudRepository.save(movimentacao1);
+
+
+        final var listamovs = movimentacaoCrudRepository.findAll();
+
+        final List<Conta> lista = repository.findWithCategoriaMovimentacao("mov2");
+
+        assertNotNull(lista);
+        assertEquals(1, lista.size());
+
+        final var contaEncontrada = lista.get(0);
+        assertEquals(456, contaEncontrada.getAgencia());
+        assertEquals(456, contaEncontrada.getNumero());
     }
 
 }

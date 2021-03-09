@@ -1,6 +1,7 @@
 package com.treinamento.persistence.movimentacao.domain;
 
 import com.treinamento.persistence.conta.domain.Conta;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,8 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
 @Builder
@@ -37,7 +38,12 @@ public class Movimentacao {
     @ManyToOne
     private Conta conta;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "movimentacao_categoria",
+            joinColumns = {@JoinColumn(name = "movimentacao_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categoria_id")}
+    )
     private final Set<Categoria> categorias = new HashSet<>();
 
     @CreationTimestamp

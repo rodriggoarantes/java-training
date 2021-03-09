@@ -11,4 +11,5 @@ public interface ContaRepository {
 
     List<Conta> findWithMovimentacoes();
     List<Conta> findWithTipoMovimentacao(TipoMovimentacao tipoMovimentacao);
+    List<Conta> findWithCategoriaMovimentacao(String categoria);
 }
