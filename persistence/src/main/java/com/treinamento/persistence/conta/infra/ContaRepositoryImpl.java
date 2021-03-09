@@ -20,12 +20,12 @@ import java.util.List;
 @Repository
 public class ContaRepositoryImpl implements ContaRepository {
 
-    private final ContaIdSequenceGenerator sequenceGenerator;
     private final ContaCrudRepository crudRepository;
+    private final ContaIdSequenceGenerator sequenceGenerator;
 
     @Autowired
-    public ContaRepositoryImpl(ContaIdSequenceGenerator sequenceGenerator, ContaCrudRepository crudRepository) {
-        this.sequenceGenerator = sequenceGenerator;
+    public ContaRepositoryImpl(ContaCrudRepository crudRepository) {
+        this.sequenceGenerator = ContaIdSequenceGenerator.instance(crudRepository);
         this.crudRepository = crudRepository;
     }
 
@@ -60,6 +60,7 @@ public class ContaRepositoryImpl implements ContaRepository {
         return crudRepository.listarComMovimentacoes();
     }
 
+    @Override
     public List<Conta> findWithTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
         return crudRepository.findAll(withTipoMovimentacao(tipoMovimentacao));
     }

@@ -10,14 +10,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,15 +33,17 @@ public class Movimentacao {
     private String descricao;
     @Enumerated(EnumType.STRING)
     private TipoMovimentacao tipo;
+
+    @ManyToOne
+    private Conta conta;
+
+    @ManyToMany
+    private final Set<Categoria> categorias = new HashSet<>();
+
     @CreationTimestamp
     private LocalDateTime data;
     @Version
     private Long version;
-
-    @ManyToOne
-    private Conta conta;
-    @ManyToMany
-    private final Set<Categoria> categorias = new HashSet<>();
 
     public Movimentacao(Conta conta, TipoMovimentacao tipo, String descricao) {
         this.conta = conta;

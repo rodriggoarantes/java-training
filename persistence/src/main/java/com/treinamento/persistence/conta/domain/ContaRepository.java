@@ -1,5 +1,7 @@
 package com.treinamento.persistence.conta.domain;
 
+import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
+
 import java.util.List;
 
 public interface ContaRepository {
@@ -8,4 +10,5 @@ public interface ContaRepository {
     Conta findBy(ContaId id);
 
     List<Conta> findWithMovimentacoes();
+    List<Conta> findWithTipoMovimentacao(TipoMovimentacao tipoMovimentacao);
 }

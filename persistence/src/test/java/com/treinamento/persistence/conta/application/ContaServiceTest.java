@@ -1,5 +1,6 @@
 package com.treinamento.persistence.conta.application;
 
+import com.treinamento.persistence.config.ConfigIT;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaRepository;
 import com.treinamento.persistence.conta.domain.ContaStatus;
@@ -7,10 +8,12 @@ import com.treinamento.persistence.conta.infra.ContaCrudRepository;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoRepository;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
+import com.treinamento.persistence.titular.domain.TitularId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -18,9 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
-class ContaServiceTest {
+class ContaServiceTest extends ConfigIT {
 
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
@@ -47,22 +48,5 @@ class ContaServiceTest {
         assertEquals(Double.valueOf(-10), alterada.getSaldo().doubleValue());
     }
 
-    @Test
-    void listarComMovimentacoes() {
-        final Conta conta = service.create(123, 345, 1L);
-        final Movimentacao movimentacao = movimentacaoRepository.save(
-                Movimentacao.builder().descricao("CONTAA").tipo(TipoMovimentacao.CREDITO).conta(conta).build());
 
-        final List<Conta> lista = service.listarComMovimentacoes();
-
-        assertNotNull(lista);
-        assertEquals(1, lista.size());
-
-        assertNotNull(lista.get(0).getMovimentacoes());
-        assertNotNull(lista.get(0).getMovimentacoes().get(0));
-
-        final Movimentacao movListado = lista.get(0).getMovimentacoes().get(0);
-        assertEquals(movimentacao.getDescricao(), movListado.getDescricao());
-        assertEquals(movimentacao.getTipo(), movListado.getTipo());
-    }
 }

@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
 @Builder
@@ -41,7 +41,7 @@ public class Conta {
     @Version
     private Long version;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "conta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Movimentacao> movimentacoes;
 
     public Conta(Integer agencia, Integer numero, TitularId titular) {
