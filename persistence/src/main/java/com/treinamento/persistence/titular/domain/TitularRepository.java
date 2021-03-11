@@ -1,7 +1,5 @@
 package com.treinamento.persistence.titular.domain;
 
-import com.treinamento.persistence.movimentacao.domain.Movimentacao;
-
 import java.util.List;
 
 public interface TitularRepository {
