@@ -28,7 +28,7 @@ class ContaServiceTest extends ConfigIT {
 
     @Test
     void alterarStatus() {
-        final Conta conta = service.create(123, 345, 1L);
+        final Conta conta = service.create(123, 345, TitularId.generate());
         service.alterarStatus(conta.getId(), ContaStatus.ATIVO);
 
         final Conta alterada = service.find(conta.getId());
@@ -37,7 +37,7 @@ class ContaServiceTest extends ConfigIT {
 
     @Test
     void realizarDebito() {
-        final Conta conta = service.create(123, 345, 1L);
+        final Conta conta = service.create(123, 345, TitularId.generate());
         service.realizarDebito(conta.getId(), BigDecimal.valueOf(10.0));
 
         final Conta alterada = service.find(conta.getId());

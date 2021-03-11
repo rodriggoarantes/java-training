@@ -23,12 +23,12 @@ public class ContaService {
         this.repository = repository;
     }
 
-    public Conta create(Integer agencia, Integer conta, Long titularId) {
+    public Conta create(Integer agencia, Integer conta, TitularId titularId) {
         final Conta novaConta = Conta.builder()
                                      .id(ContaId.generate())
                                      .agencia(agencia)
                                      .numero(conta)
-                                     .titular(TitularId.from(titularId))
+                                     .titular(titularId)
                                      .saldo(BigDecimal.ZERO)
                                      .build();
         return repository.save(novaConta);

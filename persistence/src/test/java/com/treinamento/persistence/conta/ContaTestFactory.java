@@ -13,7 +13,7 @@ public final class ContaTestFactory {
     public static final ContaId contaId = ContaId.generate();
     public static final Integer agencia = 123;
     public static final Integer numero = 123;
-    public static final TitularId titular = TitularId.from(123L);
+    public static final TitularId titular = TitularId.generate();
 
     public static Conta.ContaBuilder umaContaBuilder() {
         return Conta.builder()
