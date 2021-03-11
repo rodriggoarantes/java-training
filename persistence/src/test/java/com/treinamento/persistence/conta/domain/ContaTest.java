@@ -1,7 +1,7 @@
 package com.treinamento.persistence.conta.domain;
 
 import com.treinamento.framework.exception.BusinessException;
-import com.treinamento.persistence.conta.util.ContaTestFactory;
+import com.treinamento.persistence.conta.ContaTestFactory;
 import org.hibernate.internal.util.SerializationHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

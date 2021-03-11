@@ -1,40 +1,28 @@
 package com.treinamento.persistence.conta.infra;
 
-import com.treinamento.persistence.config.ConfigIT;
+import com.treinamento.persistence.config.RepositoryConfigIT;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.domain.ContaRepository;
 import com.treinamento.persistence.conta.domain.ContaStatus;
-import com.treinamento.persistence.conta.util.ContaTestFactory;
+import com.treinamento.persistence.conta.ContaTestFactory;
 import com.treinamento.persistence.movimentacao.domain.Categoria;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
-import com.treinamento.persistence.movimentacao.infra.MovimentacaoCrudRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ContaRepositoryImplTest extends ConfigIT {
-
-    @Autowired
-    private ContaCrudRepository contaCrudRepository;
-    @Autowired
-    private MovimentacaoCrudRepository movimentacaoCrudRepository;
+class ContaRepositoryImplTest extends RepositoryConfigIT {
 
     @Autowired
     private ContaRepository repository;
-
-    @BeforeEach
-    void beforEach() {
-        movimentacaoCrudRepository.deleteAll();
-        contaCrudRepository.deleteAll();
-    }
 
     @Test
     void findAll() {
@@ -94,14 +82,13 @@ class ContaRepositoryImplTest extends ConfigIT {
     void findWithTipoMovimentacao() {
 
         final var conta1 = repository.save(ContaTestFactory.umaContaBuilder().build());
-        movimentacaoCrudRepository.save(
-                Movimentacao.builder().descricao("CONTA1").tipo(TipoMovimentacao.DEBITO).conta(conta1).build());
+        conta1.adicionarMovimentacao("CONTA1", TipoMovimentacao.DEBITO);
+        repository.save(conta1);
 
         final var conta2 = repository.save(ContaTestFactory.umaContaBuilder().build());
-        movimentacaoCrudRepository.save(
-                Movimentacao.builder().descricao("CONTA2").tipo(TipoMovimentacao.CREDITO).conta(conta2).build());
-        movimentacaoCrudRepository.save(
-                Movimentacao.builder().descricao("CONTA2").tipo(TipoMovimentacao.DEBITO).conta(conta2).build());
+        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.CREDITO);
+        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.DEBITO);
+        repository.save(conta2);
 
         final List<Conta> lista = repository.findWithTipoMovimentacao(TipoMovimentacao.CREDITO);
 
@@ -119,24 +106,26 @@ class ContaRepositoryImplTest extends ConfigIT {
 
     @Test
     void findWithMovimentacoes() {
+        // given
         final var movimentacaoDescricao = "CONTAA";
         final var movimentacaoTipo = TipoMovimentacao.CREDITO;
         final Conta conta = ContaTestFactory.umaContaBuilder().build();
         conta.adicionarMovimentacao(movimentacaoDescricao, movimentacaoTipo);
-
         repository.save(conta);
 
+        // when
         final List<Conta> lista = repository.findWithMovimentacoes();
+
+        // then
         assertNotNull(lista);
         assertEquals(1, lista.size());
 
         final var conta0  = lista.get(0);
-
         assertNotNull(conta0);
         assertNotNull(conta0.getMovimentacoes());
         assertNotNull(conta0.getMovimentacoes().get(0));
 
-        final Movimentacao movListado = lista.get(0).getMovimentacoes().get(0);
+        final Movimentacao movListado = conta0.getMovimentacoes().get(0);
         assertEquals(movimentacaoDescricao, movListado.getDescricao());
         assertEquals(movimentacaoTipo, movListado.getTipo());
     }
@@ -145,19 +134,17 @@ class ContaRepositoryImplTest extends ConfigIT {
     void findWithCategoria() {
 
         // given
-        final var conta0 = repository.save(ContaTestFactory.umaContaBuilder().build());
-        final var movimentacao1 = Movimentacao.builder().descricao("CONTA0").conta(conta0).tipo(TipoMovimentacao.DEBITO).build();
-        movimentacao1.adicionarCategoria(new Categoria("mov1"));
-        movimentacaoCrudRepository.save(movimentacao1);
+        final var conta0 = ContaTestFactory.umaContaBuilder().build();
+        conta0.adicionarMovimentacao("movimentacao1:conta0", TipoMovimentacao.DEBITO, Set.of(new Categoria("alpha")));
+        repository.save(conta0);
 
-        final var conta1 = repository.save(ContaTestFactory.umaContaBuilder().agencia(456).numero(456).build());
-        final var movimentacao2 = Movimentacao.builder().descricao("CONTA1").conta(conta1).tipo(TipoMovimentacao.DEBITO).build();
-        movimentacao2.adicionarCategoria(new Categoria("mov1"));
-        movimentacao2.adicionarCategoria(new Categoria("mov2"));
-        movimentacaoCrudRepository.save(movimentacao2);
+        final var conta1 = ContaTestFactory.umaContaBuilder().agencia(456).numero(456).build();
+        conta1.adicionarMovimentacao("movimentacao2:conta1", TipoMovimentacao.CREDITO, Set.of(new Categoria("beta"),
+                                                                                              new Categoria("gama")));
+        repository.save(conta1);
 
         // when
-        final List<Conta> lista = repository.findWithCategoriaMovimentacao("mov2");
+        final List<Conta> lista = repository.findWithCategoriaMovimentacao("gama");
 
         // then
         assertNotNull(lista);

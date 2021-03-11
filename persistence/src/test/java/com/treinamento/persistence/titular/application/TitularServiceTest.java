@@ -1,5 +1,6 @@
 package com.treinamento.persistence.titular.application;
 
+import com.treinamento.persistence.config.ConfigIT;
 import com.treinamento.persistence.titular.domain.Titular;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class TitularServiceTest {
+class TitularServiceTest extends ConfigIT {
 
     @Autowired
     private TitularService service;

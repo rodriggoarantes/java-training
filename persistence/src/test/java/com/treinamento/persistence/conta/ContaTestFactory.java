@@ -1,4 +1,4 @@
-package com.treinamento.persistence.conta.util;
+package com.treinamento.persistence.conta;
 
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;

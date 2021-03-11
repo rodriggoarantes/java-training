@@ -2,6 +2,7 @@ package com.treinamento.persistence.conta.domain;
 
 import com.treinamento.framework.domain.AbstractEntity;
 import com.treinamento.framework.exception.BusinessException;
+import com.treinamento.persistence.movimentacao.domain.Categoria;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
 import com.treinamento.persistence.titular.domain.TitularId;
@@ -31,6 +32,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -96,11 +98,17 @@ public class Conta extends AbstractEntity<ContaId> {
 
     public void adicionarMovimentacao(@NonNull String descricao,
                                       @NonNull TipoMovimentacao tipo) {
+        this.adicionarMovimentacao(descricao, tipo, Collections.emptySet());
+    }
+    public void adicionarMovimentacao(@NonNull String descricao,
+                                      @NonNull TipoMovimentacao tipo,
+                                      @NonNull Set<Categoria> categorias) {
         final var movimentacao = Movimentacao.builder()
                                              .conta(this)
                                              .descricao(descricao)
                                              .tipo(tipo)
                                              .build();
+        movimentacao.adicionarCategoria(categorias);
 
         if (CollectionUtils.isEmpty(this.movimentacoes))
             this.movimentacoes = new ArrayList<>(1);
