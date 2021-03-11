@@ -26,8 +26,8 @@ public class Titular extends AbstractEntity<TitularId> {
     private String nome;
 
     @Builder
-    public Titular(@NonNull TitularId id,
-                   @NonNull String nome) {
+    private Titular(@NonNull TitularId id,
+                    @NonNull String nome) {
         this.id = id;
         this.nome = nome;
     }

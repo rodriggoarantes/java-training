@@ -4,6 +4,7 @@ import com.treinamento.framework.domain.AbstractEntity;
 import com.treinamento.framework.exception.BusinessException;
 import com.treinamento.persistence.movimentacao.domain.Categoria;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
+import com.treinamento.persistence.movimentacao.domain.MovimentacaoId;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
 import com.treinamento.persistence.titular.domain.TitularId;
 import lombok.AccessLevel;
@@ -60,7 +61,7 @@ public class Conta extends AbstractEntity<ContaId> {
     private LocalDateTime created;
 
     @Builder
-    public Conta(@NonNull ContaId id,
+    private Conta(@NonNull ContaId id,
                  @NonNull Integer agencia,
                  @NonNull Integer numero,
                  @NonNull TitularId titular,
@@ -100,10 +101,12 @@ public class Conta extends AbstractEntity<ContaId> {
                                       @NonNull TipoMovimentacao tipo) {
         this.adicionarMovimentacao(descricao, tipo, Collections.emptySet());
     }
+
     public void adicionarMovimentacao(@NonNull String descricao,
                                       @NonNull TipoMovimentacao tipo,
                                       @NonNull Set<Categoria> categorias) {
         final var movimentacao = Movimentacao.builder()
+                                             .id(MovimentacaoId.generate())
                                              .conta(this)
                                              .descricao(descricao)
                                              .tipo(tipo)

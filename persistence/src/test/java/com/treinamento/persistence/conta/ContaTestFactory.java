@@ -7,8 +7,7 @@ import com.treinamento.persistence.titular.domain.TitularId;
 import java.math.BigDecimal;
 
 public final class ContaTestFactory {
-    private ContaTestFactory() {
-    }
+    private ContaTestFactory() {}
 
     public static final ContaId contaId = ContaId.generate();
     public static final Integer agencia = 123;

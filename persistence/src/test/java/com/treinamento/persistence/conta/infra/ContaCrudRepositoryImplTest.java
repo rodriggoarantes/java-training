@@ -1,10 +1,10 @@
 package com.treinamento.persistence.conta.infra;
 
 import com.treinamento.persistence.config.RepositoryConfigIT;
+import com.treinamento.persistence.conta.ContaTestFactory;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.domain.ContaStatus;
-import com.treinamento.persistence.conta.ContaTestFactory;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
 import org.junit.jupiter.api.BeforeEach;

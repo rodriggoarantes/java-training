@@ -7,24 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Embeddable
 @Getter
-@ToString
 @EqualsAndHashCode
-@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(staticName = "from")
 public class Categoria {
-
-    @Id
-    @GeneratedValue
-    private Long id;
     private String nome;
-
-    public Categoria(String nome) {
-        this.nome = nome;
-    }
 }

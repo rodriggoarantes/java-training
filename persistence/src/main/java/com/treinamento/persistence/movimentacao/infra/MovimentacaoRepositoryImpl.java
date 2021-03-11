@@ -1,6 +1,7 @@
 package com.treinamento.persistence.movimentacao.infra;
 
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
+import com.treinamento.persistence.movimentacao.domain.MovimentacaoId;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,8 +33,8 @@ public class MovimentacaoRepositoryImpl implements MovimentacaoRepository {
     }
 
     @Override
-    public Movimentacao findBy(Long id) {
+    public Movimentacao findBy(MovimentacaoId id) {
         return crudRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nenhuma registro encontrado"));
+                .orElseThrow(() -> new RuntimeException("Nenhum registro encontrado"));
     }
 }

@@ -1,11 +1,11 @@
 package com.treinamento.persistence.conta.infra;
 
 import com.treinamento.persistence.config.RepositoryConfigIT;
+import com.treinamento.persistence.conta.ContaTestFactory;
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.domain.ContaRepository;
 import com.treinamento.persistence.conta.domain.ContaStatus;
-import com.treinamento.persistence.conta.ContaTestFactory;
 import com.treinamento.persistence.movimentacao.domain.Categoria;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
@@ -135,12 +135,12 @@ class ContaRepositoryImplTest extends RepositoryConfigIT {
 
         // given
         final var conta0 = ContaTestFactory.umaContaBuilder().build();
-        conta0.adicionarMovimentacao("movimentacao1:conta0", TipoMovimentacao.DEBITO, Set.of(new Categoria("alpha")));
+        conta0.adicionarMovimentacao("movimentacao1:conta0", TipoMovimentacao.DEBITO, Set.of(Categoria.from("alpha")));
         repository.save(conta0);
 
         final var conta1 = ContaTestFactory.umaContaBuilder().agencia(456).numero(456).build();
-        conta1.adicionarMovimentacao("movimentacao2:conta1", TipoMovimentacao.CREDITO, Set.of(new Categoria("beta"),
-                                                                                              new Categoria("gama")));
+        conta1.adicionarMovimentacao("movimentacao2:conta1", TipoMovimentacao.CREDITO, Set.of(Categoria.from("beta"),
+                                                                                              Categoria.from("gama")));
         repository.save(conta1);
 
         // when
