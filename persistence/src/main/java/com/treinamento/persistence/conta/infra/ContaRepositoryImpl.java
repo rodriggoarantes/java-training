@@ -22,11 +22,9 @@ import java.util.List;
 public class ContaRepositoryImpl implements ContaRepository {
 
     private final ContaCrudRepository crudRepository;
-    private final ContaIdSequenceGenerator sequenceGenerator;
 
     @Autowired
     public ContaRepositoryImpl(ContaCrudRepository crudRepository) {
-        this.sequenceGenerator = ContaIdSequenceGenerator.instance(crudRepository);
         this.crudRepository = crudRepository;
     }
 
@@ -39,14 +37,6 @@ public class ContaRepositoryImpl implements ContaRepository {
 
     @Override
     public Conta save(Conta conta) {
-        if (conta.getId() == null || conta.getId().getContaId() == -1) {
-            conta = Conta.builder()
-                         .id(sequenceGenerator.nextId())
-                         .agencia(conta.getAgencia()).numero(conta.getNumero())
-                         .saldo(conta.getSaldo()).status(conta.getStatus())
-                         .titular(conta.getTitular())
-                         .build();
-        }
         return crudRepository.save(conta);
     }
 
@@ -75,7 +65,6 @@ public class ContaRepositoryImpl implements ContaRepository {
         return (root, cq, cb) -> {
             final var joinMovimentacoes = root.join("movimentacoes", JoinType.INNER);
             final var joinCategorias = joinMovimentacoes.join("categorias", JoinType.INNER);
-
             return cb.equal(joinCategorias.get("nome"), categoria);
         };
     }

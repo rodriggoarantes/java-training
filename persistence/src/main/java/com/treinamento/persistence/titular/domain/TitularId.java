@@ -22,5 +22,9 @@ public class TitularId implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator", sequenceName="titular_seq", allocationSize=1)
     private Long titularId;
+
+    public static TitularId from(Long id) {
+        return new TitularId(id);
+    }
 }
 

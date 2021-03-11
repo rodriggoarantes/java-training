@@ -1,30 +1,24 @@
 package com.treinamento.persistence.conta.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.treinamento.framework.domain.DomainObjectId;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
+import java.util.UUID;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
-@Embeddable
-public class ContaId implements Serializable {
+public class ContaId extends DomainObjectId<UUID> {
+    private static final long serialVersionUID = -2711304044127955012L;
 
-    private Long contaId;
-
-    public static ContaId from(Number id) {
-        return new ContaId(id.longValue());
+    private ContaId(UUID id) {
+        super(id);
     }
 
-    public ContaId next() {
-        return from(contaId + 1);
+    public static ContaId generate() {
+        return new ContaId(UUID.randomUUID());
+    }
+
+    @JsonCreator
+    public static ContaId from(final String id) {
+        return id != null ? new ContaId(UUID.fromString(id)) : null;
     }
 }
 

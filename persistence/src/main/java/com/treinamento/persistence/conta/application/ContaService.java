@@ -24,29 +24,27 @@ public class ContaService {
     }
 
     public Conta create(Integer agencia, Integer conta, Long titularId) {
-        final Conta novaConta = new Conta(agencia, conta, new TitularId(titularId));
+        final Conta novaConta = Conta.builder()
+                                     .id(ContaId.generate())
+                                     .agencia(agencia)
+                                     .numero(conta)
+                                     .titular(TitularId.from(titularId))
+                                     .saldo(BigDecimal.ZERO)
+                                     .build();
         return repository.save(novaConta);
     }
 
-    public List<Conta> all() {
-        return repository.findAll();
+    public Conta find(ContaId id) {
+        return repository.findBy(id);
     }
 
-    public List<Conta> listarComMovimentacoes() {
-        return repository.findWithMovimentacoes();
-    }
-
-    public Conta find(Long id) {
-        return repository.findBy(new ContaId(id));
-    }
-
-    public void alterarStatus(Long contaId, ContaStatus newStatus) {
-        final Conta conta = repository.findBy(ContaId.from(contaId));
+    public void alterarStatus(ContaId contaId, ContaStatus newStatus) {
+        final Conta conta = repository.findBy(contaId);
         conta.alterarStatus(newStatus);
     }
 
-    public void realizarDebito(Long contaId, Double valor) {
-        final Conta conta = repository.findBy(ContaId.from(contaId));
-        conta.debitar(BigDecimal.valueOf(valor));
+    public void realizarDebito(ContaId contaId, BigDecimal valor) {
+        final Conta conta = repository.findBy(contaId);
+        conta.debitar(valor);
     }
 }

@@ -9,9 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ContaCrudRepository extends CrudRepository<Conta, ContaId>, JpaSpecificationExecutor<Conta> {
-    @Query("SELECT MAX(c.id) FROM Conta c")
-    ContaId findMaxId();
-
     @Query("SELECT c FROM Conta c LEFT JOIN FETCH c.movimentacoes")
     List<Conta> listarComMovimentacoes();
 }

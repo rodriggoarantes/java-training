@@ -1,5 +1,6 @@
 package com.treinamento.persistence.movimentacao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.treinamento.persistence.conta.domain.Conta;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,6 @@ import java.util.Set;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
-@Builder
 @EqualsAndHashCode
 @Entity
 public class Movimentacao {
@@ -31,11 +31,15 @@ public class Movimentacao {
     @Id
     @GeneratedValue
     private Long id;
+
     private String descricao;
+
     @Enumerated(EnumType.STRING)
     private TipoMovimentacao tipo;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=Conta.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="contaId")
+    @JsonIgnore
     private Conta conta;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -47,10 +51,12 @@ public class Movimentacao {
     private final Set<Categoria> categorias = new HashSet<>();
 
     @CreationTimestamp
-    private LocalDateTime data;
+    private LocalDateTime created;
+
     @Version
     private Long version;
 
+    @Builder
     public Movimentacao(Conta conta, TipoMovimentacao tipo, String descricao) {
         this.conta = conta;
         this.tipo = tipo;

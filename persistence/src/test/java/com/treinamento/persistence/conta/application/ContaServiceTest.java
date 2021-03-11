@@ -24,27 +24,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class ContaServiceTest extends ConfigIT {
 
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
-    @Autowired
-    private ContaRepository contaRepository;
-    @Autowired
     private ContaService service;
 
     @Test
     void alterarStatus() {
         final Conta conta = service.create(123, 345, 1L);
-        service.alterarStatus(conta.getId().getContaId(), ContaStatus.ATIVO);
+        service.alterarStatus(conta.getId(), ContaStatus.ATIVO);
 
-        final Conta alterada = service.find(conta.getId().getContaId());
+        final Conta alterada = service.find(conta.getId());
         assertEquals(ContaStatus.ATIVO, alterada.getStatus());
     }
 
     @Test
     void realizarDebito() {
         final Conta conta = service.create(123, 345, 1L);
-        service.realizarDebito(conta.getId().getContaId(), 10.0);
+        service.realizarDebito(conta.getId(), BigDecimal.valueOf(10.0));
 
-        final Conta alterada = service.find(conta.getId().getContaId());
+        final Conta alterada = service.find(conta.getId());
         assertEquals(Double.valueOf(-10), alterada.getSaldo().doubleValue());
     }
 
