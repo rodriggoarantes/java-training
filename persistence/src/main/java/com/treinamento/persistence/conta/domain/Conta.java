@@ -20,21 +20,17 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -52,7 +48,7 @@ public class Conta extends AbstractEntity<ContaId> {
     private ContaStatus status;
     private BigDecimal saldo;
 
-    @OneToMany(mappedBy = "conta", cascade = {CascadeType.PERSIST, CascadeType.ALL}, fetch = FetchType.EAGER, targetEntity = Movimentacao.class)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Movimentacao.class)
     private List<Movimentacao> movimentacoes;
 
     @Version
