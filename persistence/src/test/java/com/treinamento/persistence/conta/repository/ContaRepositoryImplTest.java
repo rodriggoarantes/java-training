@@ -1,4 +1,4 @@
-package com.treinamento.persistence.conta.infra;
+package com.treinamento.persistence.conta.repository;
 
 import com.treinamento.persistence.config.RepositoryConfigIT;
 import com.treinamento.persistence.conta.ContaTestFactory;
@@ -82,12 +82,12 @@ class ContaRepositoryImplTest extends RepositoryConfigIT {
     void findWithTipoMovimentacao() {
 
         final var conta1 = repository.save(ContaTestFactory.umaContaBuilder().build());
-        conta1.adicionarMovimentacao("CONTA1", TipoMovimentacao.DEBITO);
+        conta1.adicionarMovimentacao("CONTA1", TipoMovimentacao.DEBITO, BigDecimal.ONE);
         repository.save(conta1);
 
         final var conta2 = repository.save(ContaTestFactory.umaContaBuilder().build());
-        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.CREDITO);
-        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.DEBITO);
+        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.CREDITO, BigDecimal.ONE);
+        conta2.adicionarMovimentacao("CONTA2", TipoMovimentacao.DEBITO, BigDecimal.ONE);
         repository.save(conta2);
 
         final List<Conta> lista = repository.findWithTipoMovimentacao(TipoMovimentacao.CREDITO);
@@ -110,7 +110,7 @@ class ContaRepositoryImplTest extends RepositoryConfigIT {
         final var movimentacaoDescricao = "CONTAA";
         final var movimentacaoTipo = TipoMovimentacao.CREDITO;
         final Conta conta = ContaTestFactory.umaContaBuilder().build();
-        conta.adicionarMovimentacao(movimentacaoDescricao, movimentacaoTipo);
+        conta.adicionarMovimentacao(movimentacaoDescricao, movimentacaoTipo, BigDecimal.ONE);
         repository.save(conta);
 
         // when
@@ -135,12 +135,12 @@ class ContaRepositoryImplTest extends RepositoryConfigIT {
 
         // given
         final var conta0 = ContaTestFactory.umaContaBuilder().build();
-        conta0.adicionarMovimentacao("movimentacao1:conta0", TipoMovimentacao.DEBITO, Set.of(Categoria.from("alpha")));
+        conta0.adicionarMovimentacao("movimentacao1:conta0", TipoMovimentacao.DEBITO, BigDecimal.ONE, Set.of(Categoria.from("alpha")));
         repository.save(conta0);
 
         final var conta1 = ContaTestFactory.umaContaBuilder().agencia(456).numero(456).build();
-        conta1.adicionarMovimentacao("movimentacao2:conta1", TipoMovimentacao.CREDITO, Set.of(Categoria.from("beta"),
-                                                                                              Categoria.from("gama")));
+        conta1.adicionarMovimentacao("movimentacao2:conta1", TipoMovimentacao.CREDITO, BigDecimal.ONE,
+                                     Set.of(Categoria.from("beta"), Categoria.from("gama")));
         repository.save(conta1);
 
         // when

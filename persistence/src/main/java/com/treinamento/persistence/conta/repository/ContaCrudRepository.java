@@ -1,4 +1,4 @@
-package com.treinamento.persistence.conta.infra;
+package com.treinamento.persistence.conta.repository;
 
 import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-interface ContaCrudRepository extends CrudRepository<Conta, ContaId>, JpaSpecificationExecutor<Conta> {
+public interface ContaCrudRepository extends CrudRepository<Conta, ContaId>, JpaSpecificationExecutor<Conta> {
     @Query("SELECT c FROM Conta c LEFT JOIN FETCH c.movimentacoes")
     List<Conta> listarComMovimentacoes();
 }

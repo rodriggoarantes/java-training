@@ -15,8 +15,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +34,8 @@ public class Movimentacao extends AbstractEntity<MovimentacaoId> {
 
     @Enumerated(EnumType.STRING)
     private TipoMovimentacao tipo;
+
+    private BigDecimal valor;
 
     @ManyToOne(targetEntity=Conta.class, fetch = FetchType.LAZY)
     @JoinColumn(name="contaId")
@@ -54,12 +56,14 @@ public class Movimentacao extends AbstractEntity<MovimentacaoId> {
     @Builder
     private Movimentacao(@NonNull MovimentacaoId id,
                          @NonNull Conta conta,
+                         @NonNull BigDecimal valor,
                          @NonNull TipoMovimentacao tipo,
                          @NonNull String descricao) {
         this.id = id;
         this.conta = conta;
         this.tipo = tipo;
         this.descricao = descricao;
+        this.valor = valor;
     }
 
     public void adicionarCategoria(Categoria categoria) {

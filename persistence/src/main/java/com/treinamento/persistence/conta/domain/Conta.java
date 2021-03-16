@@ -48,7 +48,7 @@ public class Conta extends AbstractEntity<ContaId> {
     private ContaStatus status;
     private BigDecimal saldo;
 
-    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Movimentacao.class)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Movimentacao.class, orphanRemoval = true)
     private List<Movimentacao> movimentacoes;
 
     @Version
@@ -58,10 +58,10 @@ public class Conta extends AbstractEntity<ContaId> {
 
     @Builder
     private Conta(@NonNull ContaId id,
-                 @NonNull Integer agencia,
-                 @NonNull Integer numero,
-                 @NonNull TitularId titular,
-                 @NonNull BigDecimal saldo) {
+                  @NonNull Integer agencia,
+                  @NonNull Integer numero,
+                  @NonNull TitularId titular,
+                  @NonNull BigDecimal saldo) {
         this.id = id;
         this.agencia = agencia;
         this.numero = numero;
@@ -84,6 +84,7 @@ public class Conta extends AbstractEntity<ContaId> {
             throw new BusinessException("Valor para credito deve ser maior que zero");
         }
         this.saldo = this.saldo.add(valor);
+        adicionarMovimentacao("Credito na conta", TipoMovimentacao.CREDITO, BigDecimal.ONE);
     }
 
     public void debitar(BigDecimal valor) {
@@ -91,21 +92,25 @@ public class Conta extends AbstractEntity<ContaId> {
             throw new BusinessException("Valor para debito deve ser maior que zero");
         }
         this.saldo = this.saldo.subtract(valor);
-    }
-
-    public void adicionarMovimentacao(@NonNull String descricao,
-                                      @NonNull TipoMovimentacao tipo) {
-        this.adicionarMovimentacao(descricao, tipo, Collections.emptySet());
+        adicionarMovimentacao("Débito na conta", TipoMovimentacao.DEBITO, valor);
     }
 
     public void adicionarMovimentacao(@NonNull String descricao,
                                       @NonNull TipoMovimentacao tipo,
+                                      @NonNull BigDecimal valor) {
+        this.adicionarMovimentacao(descricao, tipo, valor, Collections.emptySet());
+    }
+
+    public void adicionarMovimentacao(@NonNull String descricao,
+                                      @NonNull TipoMovimentacao tipo,
+                                      @NonNull BigDecimal valor,
                                       @NonNull Set<Categoria> categorias) {
         final var movimentacao = Movimentacao.builder()
                                              .id(MovimentacaoId.generate())
                                              .conta(this)
                                              .descricao(descricao)
                                              .tipo(tipo)
+                                             .valor(valor)
                                              .build();
         movimentacao.adicionarCategoria(categorias);
 

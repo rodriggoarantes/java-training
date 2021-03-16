@@ -1,4 +1,4 @@
-package com.treinamento.persistence.conta.infra;
+package com.treinamento.persistence.conta.repository;
 
 import com.treinamento.persistence.config.RepositoryConfigIT;
 import com.treinamento.persistence.conta.ContaTestFactory;
@@ -7,7 +7,6 @@ import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.domain.ContaStatus;
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,11 +21,6 @@ class ContaCrudRepositoryImplTest extends RepositoryConfigIT {
 
     @Autowired
     private ContaCrudRepository contaCrudRepository;
-
-    @BeforeEach
-    void beforEach() {
-        contaCrudRepository.deleteAll();
-    }
 
     @Test
     void findAll() {
@@ -89,7 +83,7 @@ class ContaCrudRepositoryImplTest extends RepositoryConfigIT {
         final var movimentacaoDescricao = "CONTAA";
         final var movimentacaoTipo = TipoMovimentacao.CREDITO;
         final Conta conta = ContaTestFactory.umaContaBuilder().build();
-        conta.adicionarMovimentacao(movimentacaoDescricao, movimentacaoTipo);
+        conta.adicionarMovimentacao(movimentacaoDescricao, movimentacaoTipo, BigDecimal.ONE);
 
         contaCrudRepository.save(conta);
 

@@ -2,11 +2,14 @@ package com.treinamento.framework.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public abstract class DomainObjectId<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1115372100599949901L;
 

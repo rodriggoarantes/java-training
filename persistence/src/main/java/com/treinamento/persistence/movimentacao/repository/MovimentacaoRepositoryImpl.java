@@ -1,4 +1,4 @@
-package com.treinamento.persistence.movimentacao.infra;
+package com.treinamento.persistence.movimentacao.repository;
 
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoId;
@@ -6,6 +6,7 @@ import com.treinamento.persistence.movimentacao.domain.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +37,10 @@ public class MovimentacaoRepositoryImpl implements MovimentacaoRepository {
     public Movimentacao findBy(MovimentacaoId id) {
         return crudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum registro encontrado"));
+    }
+
+    @Override
+    public BigDecimal saldo() {
+        return crudRepository.saldo();
     }
 }
