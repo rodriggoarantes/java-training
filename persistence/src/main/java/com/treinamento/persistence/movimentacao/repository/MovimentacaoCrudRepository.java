@@ -2,8 +2,7 @@ package com.treinamento.persistence.movimentacao.repository;
 
 import com.treinamento.persistence.movimentacao.domain.Movimentacao;
 import com.treinamento.persistence.movimentacao.domain.MovimentacaoId;
-import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
-import com.treinamento.persistence.movimentacao.view.MovimentacaoMediaView;
+import com.treinamento.persistence.movimentacao.repository.view.MovimentacaoMediaView;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

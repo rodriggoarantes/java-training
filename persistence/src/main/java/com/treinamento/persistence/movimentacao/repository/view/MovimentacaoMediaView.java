@@ -1,4 +1,4 @@
-package com.treinamento.persistence.movimentacao.view;
+package com.treinamento.persistence.movimentacao.repository.view;
 
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
 

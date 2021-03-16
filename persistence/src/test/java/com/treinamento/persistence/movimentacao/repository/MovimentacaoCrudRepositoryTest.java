@@ -6,7 +6,6 @@ import com.treinamento.persistence.conta.domain.Conta;
 import com.treinamento.persistence.conta.domain.ContaId;
 import com.treinamento.persistence.conta.repository.ContaCrudRepository;
 import com.treinamento.persistence.movimentacao.domain.TipoMovimentacao;
-import com.treinamento.persistence.movimentacao.view.MovimentacaoMediaView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
