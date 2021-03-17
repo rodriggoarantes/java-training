@@ -21,26 +21,25 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Entity(name = "Movimentacao")
 @Table(name = "movimentacao")
 public class Movimentacao extends AbstractEntity<MovimentacaoId> {
 
-    private String descricao;
+    private final String descricao;
 
     @Enumerated(EnumType.STRING)
-    private TipoMovimentacao tipo;
+    private final TipoMovimentacao tipo;
 
-    private BigDecimal valor;
+    private final BigDecimal valor;
 
     @ManyToOne(targetEntity=Conta.class, fetch = FetchType.LAZY)
     @JoinColumn(name="contaId")
     @JsonIgnore
-    private Conta conta;
+    private final Conta conta;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "movimentacao_categoria",
@@ -64,6 +63,16 @@ public class Movimentacao extends AbstractEntity<MovimentacaoId> {
         this.tipo = tipo;
         this.descricao = descricao;
         this.valor = valor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public void adicionarCategoria(Categoria categoria) {

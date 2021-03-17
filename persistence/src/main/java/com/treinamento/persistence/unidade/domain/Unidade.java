@@ -25,9 +25,9 @@ import static java.util.Objects.requireNonNull;
 
 @Getter
 @ToString
-@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Table(name = "unidade")
 public class Unidade extends AbstractEntity<UnidadeId> {
 

@@ -35,7 +35,6 @@ import java.util.Set;
 
 @Getter
 @ToString
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Entity
@@ -72,6 +71,16 @@ public class Conta extends AbstractEntity<ContaId> {
         this.titular = titular;
         this.saldo = saldo;
         this.status = ContaStatus.ANALISE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public void alterarStatus(ContaStatus newStatus) {

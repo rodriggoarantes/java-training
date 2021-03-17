@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 
 @Getter
 @ToString
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -59,7 +58,6 @@ public class Funcionario extends AbstractEntity<FuncionarioId> {
     private final Set<Unidade> unidades;
 
     @CreationTimestamp
-    @EqualsAndHashCode.Exclude
     private LocalDateTime created;
 
     @Builder
@@ -76,6 +74,16 @@ public class Funcionario extends AbstractEntity<FuncionarioId> {
         this.dataContratacao = requireNonNull(dataContratacao);
         this.cargo = requireNonNull(cargo);
         this.unidades = new HashSet<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public void adicionarUnidade(@NonNull final Unidade unidade) {
