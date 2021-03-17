@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Embedded;
@@ -17,16 +18,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "unidade")
 public class Unidade extends AbstractEntity<UnidadeId> {
 
@@ -38,6 +39,9 @@ public class Unidade extends AbstractEntity<UnidadeId> {
     @ManyToMany(mappedBy = "unidades", fetch = FetchType.EAGER)
     private List<Funcionario> funcionarios;
 
+    @CreationTimestamp
+    private LocalDateTime created;
+
     @Builder
     private Unidade(UnidadeId id, String descricao, Endereco endereco) {
         if (!StringUtils.hasText(descricao)) throw new IllegalArgumentException();
@@ -45,4 +49,15 @@ public class Unidade extends AbstractEntity<UnidadeId> {
         this.descricao = requireNonNull(descricao);
         this.endereco = requireNonNull(endereco);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
 }

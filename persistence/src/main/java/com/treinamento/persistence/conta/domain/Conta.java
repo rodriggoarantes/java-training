@@ -32,19 +32,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Getter
 @ToString
-@Entity
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@Entity
 @Table(name = "conta")
 public class Conta extends AbstractEntity<ContaId> {
 
-    private Integer agencia;
-    private Integer numero;
+    private final Integer agencia;
+    private final Integer numero;
     @Embedded
-    private TitularId titular;
+    private final TitularId titular;
     private ContaStatus status;
     private BigDecimal saldo;
 
@@ -52,8 +53,11 @@ public class Conta extends AbstractEntity<ContaId> {
     private List<Movimentacao> movimentacoes;
 
     @Version
+    @EqualsAndHashCode.Exclude
     private Long version;
+
     @CreationTimestamp
+    @EqualsAndHashCode.Exclude
     private LocalDateTime created;
 
     @Builder

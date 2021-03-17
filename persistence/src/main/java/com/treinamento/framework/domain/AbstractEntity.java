@@ -18,6 +18,7 @@ public abstract class AbstractEntity<K extends DomainObjectId<?>> {
         this.id = Objects.requireNonNull(id, "The identifier cannot be null!");
     }
 
+    @NonNull
     public K getId() {
         return this.id;
     }
@@ -29,7 +30,7 @@ public abstract class AbstractEntity<K extends DomainObjectId<?>> {
         if (!(o instanceof AbstractEntity)) return false;
 
         final var that = (AbstractEntity<?>) o;
-        return Objects.equals(getId(), that.getId());
+        return Objects.equals(this.getId(), that.getId());
     }
 
     @Override
