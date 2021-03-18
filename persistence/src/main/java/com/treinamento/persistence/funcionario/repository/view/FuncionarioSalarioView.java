@@ -2,7 +2,8 @@ package com.treinamento.persistence.funcionario.repository.view;
 
 import com.treinamento.persistence.funcionario.domain.FuncionarioId;
 
-public interface FuncionarioView {
+public interface FuncionarioSalarioView {
     FuncionarioId getId();
     String getNome();
+    Double getSalario();
 }

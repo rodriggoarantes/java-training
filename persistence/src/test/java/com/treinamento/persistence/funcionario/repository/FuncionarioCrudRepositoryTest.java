@@ -4,6 +4,7 @@ import com.treinamento.persistence.config.RepositoryConfigIT;
 import com.treinamento.persistence.funcionario.domain.Cargo;
 import com.treinamento.persistence.funcionario.domain.CargoId;
 import com.treinamento.persistence.funcionario.domain.FuncionarioId;
+import com.treinamento.persistence.funcionario.repository.view.FuncionarioView;
 import com.treinamento.persistence.unidade.domain.Endereco;
 import com.treinamento.persistence.unidade.domain.Unidade;
 import com.treinamento.persistence.unidade.domain.UnidadeId;
@@ -164,7 +165,6 @@ class FuncionarioCrudRepositoryTest extends RepositoryConfigIT {
         assertEquals(2, repository.count());
     }
 
-
     @Test
     @DisplayName("Busca paginada de funcionarios")
     void buscarPaginadoEOrdenado() {
@@ -184,5 +184,36 @@ class FuncionarioCrudRepositoryTest extends RepositoryConfigIT {
         assertEquals("T::20", funcionario.getNome());
         assertEquals(20.0, funcionario.getSalario());
     }
+
+    @Test
+    @DisplayName("Busca de funcionarios com retorno usando projeção")
+    void buscarProjetado() {
+        IntStream.rangeClosed(1, 5).forEach(value -> {
+            repository.save(umFuncionarioBuilder().nome("T::" + value).cargo(cargoPadrao).salario((double) value).id(FuncionarioId.generate()).build());
+        });
+
+        final var list = repository.findFuncionarioSalario();
+        assertEquals(5, list.size());
+
+        final var funcionarioView = list.stream().findFirst().orElseThrow();
+        assertEquals("T::1", funcionarioView.getNome());
+        assertEquals(1.0, funcionarioView.getSalario());
+    }
+
+    @Test
+    @DisplayName("Busca de funcionarios com retorno usando projeção dinamica")
+    void buscarProjetadoDinamicamente() {
+        repository.save(umFuncionarioBuilder().cargo(cargoPadrao).build());
+
+        final var list = repository.findBy(FuncionarioView.class);
+
+        final var funcionarioView = list.stream().findFirst().orElseThrow();
+        assertEquals(id, funcionarioView.getId());
+        assertEquals(nome, funcionarioView.getNome());
+    }
+
+
+
+
 
 }

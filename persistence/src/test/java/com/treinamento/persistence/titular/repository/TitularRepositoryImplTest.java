@@ -1,4 +1,4 @@
-package com.treinamento.persistence.titular.infra;
+package com.treinamento.persistence.titular.repository;
 
 import com.treinamento.persistence.config.RepositoryConfigIT;
 import com.treinamento.persistence.titular.domain.Titular;
