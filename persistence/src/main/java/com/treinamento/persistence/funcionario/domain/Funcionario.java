@@ -5,7 +5,6 @@ import com.treinamento.persistence.unidade.domain.Unidade;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,6 +13,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.lang.NonNull;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +46,7 @@ public class Funcionario extends AbstractEntity<FuncionarioId> {
 
     private Double salario;
 
-    @ManyToOne(targetEntity= Cargo.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity= Cargo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="cargoId")
     private Cargo cargo;
 
