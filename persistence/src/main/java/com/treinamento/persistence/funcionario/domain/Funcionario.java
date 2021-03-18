@@ -60,6 +60,9 @@ public class Funcionario extends AbstractEntity<FuncionarioId> {
     @CreationTimestamp
     private LocalDateTime created;
 
+    @Embedded
+    private final FuncionarioSituacao situacao;
+
     @Builder
     private Funcionario(FuncionarioId id,
                         String nome,
@@ -74,6 +77,7 @@ public class Funcionario extends AbstractEntity<FuncionarioId> {
         this.dataContratacao = requireNonNull(dataContratacao);
         this.cargo = requireNonNull(cargo);
         this.unidades = new HashSet<>();
+        this.situacao = FuncionarioSituacao.ofInativo();
     }
 
     @Override
