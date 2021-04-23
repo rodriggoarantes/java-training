@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+          
+  #spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+  db:
+    image: bitnami/mariadb:latest
+    container_name: mariadb_container
+    restart: on-failure
+    environment:
+      - MARIADB_ROOT_PASSWORD=supermary
+      - MARIADB_DATABASE=persistence
+    volumes:
+      - ${PWD}/mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+
+# ADMINER - Gerenciador de Banco de Dados WEB
+  # adminer:
+  #   image: adminer
+  #   container_name: mariadb_adminer
+  #   restart: always
+  #   ports:
+  #     - 8888:8080
+  #   networks:
+  #     - backend
+
+networks:     
+  backend:
+    driver: bridge
+    name: persistence_network
